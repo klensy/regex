@@ -484,7 +484,7 @@ impl Compiler {
         debug_assert!(!ranges.is_empty());
 
         let first_split_entry = self.insts.len();
-        let mut holes = vec![];
+        let mut holes = Vec::with_capacity(ranges.len());
         let mut prev_hole = Hole::None;
         for r in &ranges[0..ranges.len() - 1] {
             self.fill_to_next(prev_hole);
@@ -547,7 +547,7 @@ impl Compiler {
 
         // Save up all of the holes from each alternate. They will all get
         // patched to point to the same location.
-        let mut holes = vec![];
+        let mut holes = Vec::with_capacity(exprs.len());
 
         // true indicates that the hole is a split where we want to fill
         // the second branch.
@@ -794,7 +794,7 @@ impl Compiler {
                 ),
             },
             Hole::Many(holes) => {
-                let mut new_holes = vec![];
+                let mut new_holes = Vec::with_capacity(holes.len());
                 for hole in holes {
                     new_holes.push(self.fill_split(hole, goto1, goto2));
                 }
